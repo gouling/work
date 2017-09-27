@@ -1,0 +1,7 @@
+﻿gouling=gouling543rsa
+svn://192.168.253.225/p2p_bottom
+
+gouling=gouling34rsfs
+svn://192.168.253.225/doc
+
+https://mail.yidai.cn/ admin P2Padmin8EYIAI

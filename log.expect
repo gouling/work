@@ -1,0 +1,9 @@
+#!/bin/bash
+
+log_user 0
+spawn rm -rf Log/
+spawn scp -r root@192.168.253.233:/www/html/branches/match/Resource/Log/ .
+expect "*password:" 
+send "edaip2p\r"
+send "exit\r"
+expect eof
