@@ -1,16 +1,16 @@
 <?php
-
+    
     /**
-     * 管理费自动结算
+     * 管理费回款结算
      * User: 芶凌
-     * Date: 2017/7/27
+     * Date: 2017/10/09
      * Time: 15:54
      */
     class overheads {
         public function __construct() {
             bcscale(2);
         }
-
+        
         /**
          * 启动多线程分帐写数据
          */
@@ -18,7 +18,7 @@
             $list = $this->__getProrate();
             print_r($list);
         }
-
+        
         /**
          * 本地取多个用户回款信息
          * 第三方取用户活期定期信息
@@ -27,25 +27,25 @@
         private function __getProrate() {
             $list = $this->__getUserList();
             $date = date_create('2017-08-09');
-
+            
             foreach ($list as $k => &$user) {
                 $client = $this->__getUserData($user);
                 if ($user['date'] === false) {
                     $user['date'] = $client['date'];
                 }
-
+                
                 $user['backData'] = $this->__getUserPlatformCash($client, $user, $date);
                 $user['diffInterest'] = 0;
-
+                
                 if ($user['backData']['platform'] > 0) {
                     $this->__setPlatformCash($user);
                 }
                 ksort($user);
             }
-
+            
             return $list;
         }
-
+        
         /**
          * 按回款记录扣取管理费
          * @param $user
@@ -53,19 +53,19 @@
         private function __setPlatformCash(&$user) {
             $alreadyTakePlatform = 0;
             $lastBackYesterday = array_pop($user['backList']);
-
+            
             $user['backData']['proportion'] = $this->__getFloorDigits($user['backData']['platform'] / $user['backCash'], 8); //不除以回款金额修改为当前给出的债权回款利息总值且回款利息需要大于0
             foreach ($user['backList'] as $k => &$v) {
                 $alreadyTakePlatform += $v['data']['cash'] = $this->__getFloorDigits($v['cash'] * $user['backData']['proportion']);
                 $v['data']['proportion'] = $user['backData']['proportion'];
             }
-
+            
             $lastBackYesterday['data']['cash'] = bcsub($user['backData']['platform'], $alreadyTakePlatform);
             $lastBackYesterday['data']['proportion'] = $this->__getFloorDigits($lastBackYesterday['data']['cash'] / $lastBackYesterday['cash'], 8);
-
+            
             array_push($user['backList'], $lastBackYesterday);
         }
-
+        
         /**
          * 计算用户与平台各自的收益
          * @param $client
@@ -77,9 +77,9 @@
             $data = array(
                 'user' => 0,
                 'platform' => 0,
-                'date' => $date
+                'date' => $date,
             );
-
+            
             /**
              * 用户本次结算理论上应收收益=活期收益+定期收益
              * 用户本次结算差额收益＝承接利息+用户欠平台的钱(小于等于0的值)+平台欠用户的钱(大于等于0的值)
@@ -87,7 +87,7 @@
              */
             $live = $this->__getLiveSum($client, $user['date'], $date);
             $fixed = $this->__getFixedSum($client, $user['date'], $date);
-
+            
             $user = array_merge($user, array(
                 'userDiffCash' => bcadd(bcadd($user['diffInterest'], $user['diffPlatform']), $user['diffUser']),
                 'userWantCash' => $live['sum'] + $fixed['sum'],
@@ -95,7 +95,7 @@
                 'live' => $live,
                 'fixed' => $fixed,
             ));
-
+            
             if ($user['userPrepareCash'] <= 0) {
                 /**
                  * 用户预期收益<=0，本次结算用户需要偿还欠平台先前垫付的利息且依然欠平台的钱
@@ -137,7 +137,7 @@
                 $data = array(
                     'user' => $user['backCash'],
                     'platform' => 0,
-                    'date' => $user['date']
+                    'date' => $user['date'],
                 );
                 $user['diffUser'] = bcsub($user['userDiffCash'], $user['backCash']);
                 $user['diffPlatform'] = 0;
@@ -149,10 +149,10 @@
                 $date = $this->__getDate($client, $user, $date);
                 return $this->__getUserPlatformCash($client, $user, $date);
             }
-
+            
             return $data;
         }
-
+        
         /**
          * 推算合理的结算日期
          * @param $client
@@ -166,14 +166,14 @@
             $refNowDate = $bigDate;
             $upUserWantCash = $user['userWantCash'];
             $index = 10;
-
+            
             while ($index > 0) {
                 $diffDay = (int)$this->__getFloorDigits(date_diff($smallDate, $bigDate)->format('%R%a') / 2);
                 $refNowDate = date_create($smallDate->format('Y-m-d'))->add(date_interval_create_from_date_string("{$diffDay} days"));
-
+                
                 $live = $this->__getLiveSum($client, $user['date'], $refNowDate);
                 $fixed = $this->__getFixedSum($client, $user['date'], $refNowDate);
-
+                
                 $user['userWantCash'] = $live['sum'] + $fixed['sum'];
                 $user['userPrepareCash'] = $user['userWantCash'] + $user['userDiffCash'];
                 if ($user['userPrepareCash'] <= $user['backCash']) {
@@ -181,19 +181,19 @@
                 } else {
                     $bigDate = $refNowDate;
                 }
-
+                
                 if ($upUserWantCash == $user['userWantCash']) {
                     break;
                 } else {
                     $upUserWantCash = $user['userWantCash'];
                 }
-
+                
                 $index--;
             }
-
+            
             return $refNowDate;
         }
-
+        
         /**
          * 获取有效回款用户列表
          */
@@ -222,12 +222,12 @@
                         array(
                             'id' => 1,
                             'cash' => 3,
-                        )
-                    )
+                        ),
+                    ),
                 ),
             );
         }
-
+        
         /**
          * 获取业务端参数
          * @param $user array(platformId, userId, date)
@@ -245,63 +245,63 @@
                 'live' => array(
                     array(
                         'date' => date_create('2017-07-25'),
-                        'cash' => 5
+                        'cash' => 5,
                     ),
                     array(
                         'date' => date_create('2017-07-26'),
-                        'cash' => 20
+                        'cash' => 20,
                     ),
                     array(
                         'date' => date_create('2017-07-27'),
-                        'cash' => 6
+                        'cash' => 6,
                     ),
                     array(
                         'date' => date_create('2017-07-28'),
-                        'cash' => 5
+                        'cash' => 5,
                     ),
                     array(
                         'date' => date_create('2017-07-29'),
-                        'cash' => 16
+                        'cash' => 16,
                     ),
                     array(
                         'date' => date_create('2017-07-30'),
-                        'cash' => 6
+                        'cash' => 6,
                     ),
                     array(
                         'date' => date_create('2017-07-31'),
-                        'cash' => 5
+                        'cash' => 5,
                     ),
                     array(
                         'date' => date_create('2017-08-01'),
-                        'cash' => 16
+                        'cash' => 16,
                     ),
                     array(
                         'date' => date_create('2017-08-02'),
-                        'cash' => 6
+                        'cash' => 6,
                     ),
                     array(
                         'date' => date_create('2017-08-03'),
-                        'cash' => 5
+                        'cash' => 5,
                     ),
                     array(
                         'date' => date_create('2017-08-04'),
-                        'cash' => 16
+                        'cash' => 16,
                     ),
                     array(
                         'date' => date_create('2017-08-05'),
-                        'cash' => 6
+                        'cash' => 6,
                     ),
                     array(
                         'date' => date_create('2017-08-06'),
-                        'cash' => 5
+                        'cash' => 5,
                     ),
                     array(
                         'date' => date_create('2017-08-07'),
-                        'cash' => 16
+                        'cash' => 16,
                     ),
                     array(
                         'date' => date_create('2017-08-08'),
-                        'cash' => 6
+                        'cash' => 6,
                     ),
                 ),
                 /*
@@ -309,26 +309,29 @@
                  * 到期退出年收益率
                  * 提前退出年收益率
                  * 充值时间
+                 * 提现时间
                  */
                 'fixed' => array(
                     '1001' => array(
                         'cash' => 1000,
-                        'fixed_rate' => 0.12,
-                        'lives_rate' => 0.12,
-                        'date' => date_create('2017-07-25'),
+                        'fixedRate' => 0.12,
+                        'livesRate' => 0.12,
+                        'setDate' => date_create('2017-07-25'),
+                        'getDate' => date_create('2017-07-25'),
                     ),
                     '1002' => array(
                         'cash' => 500,
-                        'fixed_rate' => 0.10,
-                        'lives_rate' => 0.10,
-                        'date' => date_create('2017-07-26'),
+                        'fixedRate' => 0.10,
+                        'livesRate' => 0.10,
+                        'setDate' => date_create('2017-07-26'),
+                        'getDate' => false,
                     ),
                 ),
             );
-
+            
             return $data;
         }
-
+        
         /**
          * 获取指定时间段活期收益
          * @param $data
@@ -340,7 +343,7 @@
             $dateBegin = $dateBegin;
             $dateEnd = $dateEnd;
             $liveSum = 0;
-
+            
             foreach ($data['live'] as $k => $v) {
                 if (date_diff($dateBegin, $v['date'])->format('%R%a') >= 0 && date_diff($dateEnd, $v['date'])->format('%R%a') < 0) {
                     $liveSum += $v['cash'];
@@ -348,13 +351,13 @@
                     unset($data['live'][$k]);
                 }
             }
-
+            
             return array(
                 'data' => $data['live'],
-                'sum' => $liveSum
+                'sum' => $liveSum,
             );
         }
-
+        
         /**
          * 获取指定时间段定期收益
          * @param $data
@@ -364,22 +367,27 @@
          */
         private function __getFixedSum($data, $dateBegin, $dateEnd) {
             $fixedSum = 0;
-
+            
             foreach ($data['fixed'] as $k => &$v) {
-                if (date_diff($dateBegin, $v['date'])->format('%R%a') >= 0) {
-                    $dateBegin = $v['date'];
+                if (date_diff($dateBegin, $v['setDate'])->format('%R%a') >= 0) {
+                    $dateBegin = $v['setDate'];
                 }
+                
+                if ($v['getDate'] !== false && date_diff($v['getDate'], $dateEnd)->format('%R%a') >= 0) {
+                    $dateEnd = $v['getDate'];
+                }
+                
                 $day = date_diff($dateBegin, $dateEnd)->format('%R%a');
                 $v['day'] = $day > 0 ? $day : 0;
-                $fixedSum += $v['fixExpEarnings'] = $this->__getFloorDigits($v['day'] * ($v['cash'] * $v['fixed_rate'] / 365));
+                $fixedSum += $v['fixExpEarnings'] = $this->__getFloorDigits($v['day'] * ($v['cash'] * $v['fixedRate'] / 365));
             }
-
+            
             return array(
                 'data' => $data['fixed'],
-                'sum' => $fixedSum
+                'sum' => $fixedSum,
             );
         }
-
+        
         /**
          * 向下保留小数位
          * @param $data
@@ -388,13 +396,13 @@
         private function __getFloorDigits($data, $digit = 2) {
             $data = number_format($data, 8, '.', '');
             preg_match('/^[-\d]\d*\.\d{' . $digit . '}/i', $data, $refer);
-
+            
             return doubleval($refer[0]);
         }
-
+        
         public function __destruct() {
         }
     }
-
+    
     $tool = new overheads();
     $tool->setProrate();
