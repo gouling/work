@@ -1,0 +1,9 @@
+#!/bin/bash
+
+log_user 0
+spawn rm -rf Config/
+spawn scp -r root@192.168.253.243:/data/ydp2p/html/trunk/Config .
+expect "*password:" 
+send "edaip2p\r"
+send "exit\r"
+expect eof
