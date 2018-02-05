@@ -4,6 +4,10 @@ svn://192.168.253.225/p2p_bottom
 gouling=gouling34rsfs
 svn://192.168.253.225/doc
 
+
+goulin=goulinc646
+svn://192.168.253.182/yidai_org
+
 https://mail.yidai.cn/ admin P2Padmin8EYIAI
 
 标的状态
