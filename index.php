@@ -171,6 +171,6 @@
 
 
     $search = new CSearch($solr['host'], $solr['timeout']);
-    $query = $search->query('SELECT * FROM tender LIMIT 0,1000');
+    $query = $search->query('SELECT * FROM tender WHERE post_type=\'car\'');
 
     print_r($query);
