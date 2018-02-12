@@ -171,6 +171,6 @@
 
 
     $search = new CSearch($solr['host'], $solr['timeout']);
-    $query = $search->query('SELECT * FROM tender WHERE post_type=\'car\'');
+    $query = $search->query('SELECT * FROM tender');
 
     print_r($query);
