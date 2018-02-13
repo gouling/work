@@ -19,6 +19,20 @@
 
         public function __construct($zkConnInfo) {
             $this->__zookeeper = new \Zookeeper($zkConnInfo);
+
+            foreach (array(
+                         '/solr' => 'solr tender database',
+                         '/solr/host' => 'http://127.0.0.1:8983/solr/',
+                         '/solr/timeout' => 5
+                     ) as $k => $v) {
+                $this->__zookeeper->create($k, $v, array(
+                    array(
+                        'perms' => Zookeeper::PERM_ALL,
+                        'scheme' => 'world',
+                        'id' => 'anyone',
+                    )
+                ));
+            }
         }
     }
 
@@ -28,7 +42,10 @@
 
         public function query($query) {
             $data = array();
-            $query = str_ireplace(array('\'', '\"'), '', $query);
+            $query = str_ireplace(array(
+                '\'',
+                '\"'
+            ), '', $query);
 
             foreach ($this->__query as $k => $pattern) {
                 if (preg_match($pattern, $query, $data) == 1) {
@@ -91,7 +108,13 @@
                         $rule['target'] = str_ireplace('variable', $val, $rule['target']);
                         if ($k == 'LIKE') {
                             $field = str_ireplace(' ', '', $field) . ':';
-                            $rule['target'] = str_ireplace(array(' ', $rule['source']), array('', $rule['target']),
+                            $rule['target'] = str_ireplace(array(
+                                ' ',
+                                $rule['source']
+                            ), array(
+                                '',
+                                $rule['target']
+                            ),
                                 $val);
                         }
                         if ($k == '<>') {
