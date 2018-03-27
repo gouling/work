@@ -1,22 +1,58 @@
 #!/usr/bin/env /usr/share/php-5.3.29/bin/php
 <?php
+    /**
+     * 永不重复可排序订单号
+     */
     function getIdentity() {
         $id = str_replace('.', '', uniqid('', true));
-
         return rtrim(chunk_split($id, 6, '-'), '-');
     }
-    
-    $i = 0;
-    $data = array();
-    while($i<100000) {
-        $id = getIdentity();
-        if(isset($data[$id])) {
-            printf('%s，重复。%s', $id, PHP_EOL);
-            sleep(5);
-            continue;
+
+    class CDigits {
+        private $__digits;
+        public function __construct($digits = 2) {
+            $this->__digits = $digits;
+        }
+
+        /**
+         * 向上保留小数位
+         * @param $number
+         * @return float|int
+         */
+        public function getCeilDigits($number, $digits = false) {
+            $digits = $this->__getDigits($digits);
+            $digits = pow(10, $digits);
+            $number = doubleval($number);
+            
+            return ceil($number * $digits) / $digits;
+        }
+
+        /**
+         * 四舍五入
+         * @param $number
+         * @return float
+         */
+        public function getRoundDigits($number, $digits = false) {
+            $digits = $this->__getDigits($digits);
+            $number = doubleval($number);
+            
+            return round($number, $digits);
+        }
+            
+        /**
+         * 向下保留小数位
+         * @param $number
+         * @return float|int
+         */
+        public function getFloorDigits($number, $digits = false) {
+            $digits = $this->__getDigits($digits);
+            $number = doubleval($number);
+            $index = stripos($number, '.');
+            
+            return $index === false ? $number : doubleval(substr($number, 0, $index + $digits + 1));
         }
         
-        $data[$id] = $id;
-        printf('%s%s', $id, PHP_EOL);
+        private function __getDigits($digits) {
+            return $digits === false ? $this->__digits : intval($digits);
+        }
     }
-    
