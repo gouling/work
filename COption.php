@@ -1,4 +1,12 @@
 <?php
+    /**
+     * 债权匹配(同一债权类型同一操作类型不能出现相同的minimum值)
+     * array(
+     *  code=>200 符合标准HTTP码，200时成功
+     *  data=>array|string 债权匹配参数二维数组 按minimum值降序直到最底档，string异常消息
+     *  minimum=>array 最底档位参数一维数组，异常时此键不存在
+     * )
+     */
     class COption {
         private $__borrow, $__rule;
         
