@@ -1,0 +1,20 @@
+#!/bin/bash
+
+downloadConfigForCc() {
+    cd ../cc
+    rm -rf Config/
+    scp -r root@192.168.253.242:/data/ydp2p/html/trunk/Config .
+}
+
+downloadConfigForCo() {
+    cd ../co
+    rm -rf Config/
+    scp -r root@192.168.253.243:/data/ydp2p/html/trunk/Config .
+}
+
+read -p '正在初始化项目配置文件，请输入项目名[cc/co]：' name
+case $name in
+    'cc') downloadConfigForCc;;
+    'co') downloadConfigForCo;;
+    *) echo '无法识别的项目名。';;
+esac
