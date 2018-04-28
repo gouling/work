@@ -5,11 +5,16 @@ ip addr del 192.168.253.137 dev enp2s0
 gouling=gouling34rsfs
 svn://192.168.253.225/doc
 
-gouling=gouling$vwa
-svn://192.168.253.182/p2p_cc/trunk
+域名
+192.168.253.198/199
 
-gouling=gouling$kqn
-svn://192.168.253.182/p2p_co/trunk
+微宝
+svn://192.168.253.182/p2p_cc gouling=gouling$vwa
+svn://192.168.253.182/p2p_co gouling=gouling$kqn
+
+底层
+svn://192.168.253.182/yidai_cc_new gouling=gouling$vwa
+svn://192.168.253.182/yidai_co_new gouling=gouling$kqn
 
 edaip2p_account -u'gouling' -p'gouling3_%*2123' -h172.20.0.26
 billingcenter -u'gouling' -p'gouling3_%*2123' -h172.20.0.54
