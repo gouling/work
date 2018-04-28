@@ -12,9 +12,16 @@ downloadConfigForCo() {
     scp -r root@192.168.253.243:/data/ydp2p/html/trunk/Config .
 }
 
-read -p '正在初始化项目配置文件，请输入项目名[cc/co]：' name
+downloadConfigForYidaiCc() {
+    cd ../yidai_cc/trunk
+    rm -rf Config/
+    scp -r root@192.168.253.179:/data/project/p2p_cc_5.3.28/html/trunk/Config .
+}
+
+read -p '正在初始化项目配置文件，请输入项目名[cc/co/YidaiCc]：' name
 case $name in
     'cc') downloadConfigForCc;;
     'co') downloadConfigForCo;;
+    'YidaiCc') downloadConfigForYidaiCc;;
     *) echo '无法识别的项目名。';;
 esac
