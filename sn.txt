@@ -8,13 +8,13 @@ svn://192.168.253.225/doc
 域名
 192.168.253.198/199
 
-微宝
-svn://192.168.253.182/p2p_cc gouling=gouling$vwa
-svn://192.168.253.182/p2p_co gouling=gouling$kqn
+微宝 gouling = gouling543rsa
+svn://192.168.253.182/p2p_cc
+svn://192.168.253.182/p2p_co
 
-底层
-svn://192.168.253.182/yidai_cc_new gouling=gouling$vwa
-svn://192.168.253.182/yidai_co_new gouling=gouling$kqn
+底层 gouling = gouling543rsa
+svn://192.168.253.182/yidai_cc_new
+svn://192.168.253.182/yidai_co_new
 
 运维监控
 svn://192.168.253.182/opsblockchain_php gouling = gouling$vwa
