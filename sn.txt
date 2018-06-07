@@ -16,6 +16,14 @@ svn://192.168.253.182/p2p_co
 svn://192.168.253.182/yidai_cc_new
 svn://192.168.253.182/yidai_co_new
 
+外测 gouling_branches = gouling_branchesER@WQ#$ 
+svn://125.254.156.42:13389/p2p_branches
+http://match.yxqsoft.net/
+192.168.253.223 log_check.yidaip2p.net
+
+线上
+172.20.0.23 logmatch.yixiaoqian.com
+
 运维监控
 svn://192.168.253.182/opsblockchain_php gouling = gouling$vwa
 
