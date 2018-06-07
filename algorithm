@@ -1,0 +1,17 @@
+#!/bin/bash
+
+log() {
+	curl http://log_check.yidaip2p.net/branches_match/Log/match/algorithm-$1.log > algorithm.txt && cat algorithm.txt && rm -rf algorithm.txt
+}
+
+for arg in $@; do
+	name=${arg%=*}
+	value=${arg#*=}
+	
+	case $name in
+		'--platform') log $value;;
+		*) echo '查看平台日志？[--platform]';;
+	esac
+done
+
+
