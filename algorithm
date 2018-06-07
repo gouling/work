@@ -1,7 +1,11 @@
 #!/bin/bash
 
-log() {
+stable() {
 	curl http://log_check.yidaip2p.net/branches_match/Log/match/algorithm-$1.log > algorithm.txt && cat algorithm.txt && rm -rf algorithm.txt
+}
+
+release() {
+	curl http://logmatch.yixiaoqian.com/Log/match/algorithm-$1.log > algorithm.txt && cat algorithm.txt && rm -rf algorithm.txt
 }
 
 for arg in $@; do
@@ -9,8 +13,9 @@ for arg in $@; do
 	value=${arg#*=}
 	
 	case $name in
-		'--platform') log $value;;
-		*) echo '查看平台日志？[--platform]';;
+		'--stable') stable $value;;
+		'--release') release $value;;
+		*) echo '查看平台日志？[--stable|--release]';;
 	esac
 done
 
