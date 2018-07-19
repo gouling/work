@@ -24,8 +24,18 @@ http://match.yxqsoft.net/
 线上
 172.20.0.23 logmatch.yixiaoqian.com
 
-运维监控
+运维监控 alpha
 svn://192.168.253.182/opsblockchain_php gouling = gouling$vwa
+
+运维监控 stable
+svn://47.98.228.208/qkl_online goulin = KbJOUZUrWwhiG4wC 
+database
+    47.98.228.208:3306/172.16.66.152:3306 
+    qkl_online_code = UM3YHsXPxeRazEHz 
+    qkl_online_admin = MTZJQHfLqjAQnfl0 
+    qkl_online_check = DgaMCVQ0qz0eMT7Z 
+redis
+    172.16.66.151:6379
 
 edaip2p_account -u'gouling' -p'gouling3_%*2123' -h172.20.0.26
 billingcenter -u'gouling' -p'gouling3_%*2123' -h172.20.0.54
