@@ -5,6 +5,9 @@ ip addr del 192.168.253.137 dev enp2s0
 gouling=gouling34rsfs
 svn://192.168.253.225/doc
 
+易贷
+/usr/share/mysql-5.7.11/bin/mysql -h172.20.0.8 -u'p2p_log_select' -p'p2p_log_select%$SDas00' p2p_manage_php_error/p2p_online_php_error
+
 域名
 192.168.253.198/199
 
