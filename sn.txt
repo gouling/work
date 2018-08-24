@@ -42,13 +42,6 @@ redis
 
 edaip2p_account -u'gouling' -p'gouling3_%*2123' -h172.20.0.26
 billingcenter -u'gouling' -p'gouling3_%*2123' -h172.20.0.54
+scp tender/Config/Db/schema.xml root@192.168.253.242:/usr/local/lnmp/mycat-1.6/conf
 
 https://mail.yidai.cn/ admin P2Padmin8EYIAI
-
-borrow_status_main
-1=》发标申请中 1,2,3,4,5,7
-2=》投标中 8,11,12,13
-3=》复审中 9,10
-4=》还款中 16,17,18,19
-5=》还款完成 20,21,22,23,24
-6=》流标 14,15,25,26,6
