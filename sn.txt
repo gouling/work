@@ -2,6 +2,8 @@
 ip route add default via 192.168.252.2
 ip addr del 192.168.253.137 dev enp2s0
 
+cat /proc/sys/fs/file-nr
+
 gouling=gouling34rsfs
 svn://192.168.253.225/doc
 
