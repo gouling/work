@@ -1,5 +1,5 @@
-svn log index.php | head -n 10
-svn log --search gouling -l 10
+svn log -v index.php | head -n 10
+svn log -v --search gouling -l 10
 
 svn st | awk '{if ($1 == "?") { print $2}}' | xargs svn add
 svn st | awk '{if ($1 == "!") {print $2}}' | xargs svn rm
