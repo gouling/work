@@ -1,7 +1,7 @@
 #!/usr/bin/env /usr/share/php-5.3.29/bin/php
 <?php
     /**
-     * 永不重复可排序订单号
+     * 创建可排序永不重复包含字母数字每6位以短横线分隔的25位类式订单号的编码 5b9a0b-756bcb-127764-7879
      */
     function getIdentity() {
         $id = str_replace('.', '', uniqid('', true));
