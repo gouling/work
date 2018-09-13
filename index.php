@@ -4,8 +4,10 @@
      * 创建可排序永不重复包含字母数字每6位以短横线分隔的25位类式订单号的编码 5b9a0b-756bcb-127764-7879
      */
     function getIdentity() {
-        $id = str_replace('.', '', uniqid('', true));
-        return rtrim(chunk_split($id, 6, '-'), '-');
+        $uniqid = str_replace('.', '', uniqid('', true));
+        $serial = rtrim(chunk_split($uniqid, 6, '-'), '-');
+
+        return $serial;
     }
 
     class CDigits {
