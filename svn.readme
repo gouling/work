@@ -5,3 +5,10 @@ svn st | awk '{if ($1 == "?") { print $2}}' | xargs svn add
 svn st | awk '{if ($1 == "!") {print $2}}' | xargs svn rm
 svn diff -r 110:109 index.php
 svn merge -r 110:109 index.php
+
+export SVN_EDITOR=vim
+svn pedit svn:ignore .
+
+svn plist
+svn pget svn:ignore
+svn pset svn:ignore <directory> .
