@@ -18,9 +18,10 @@ svn://192.168.253.225/doc
 svn://192.168.253.182/p2p_cc gouling = gouling$vwa
 svn://192.168.253.182/p2p_co gouling = gouling$kqn
 
-底层 gouling = gouling543rsa
+底层 gouling = gouling543rsa www.cg.cc
 svn://192.168.253.182/yidai_cc_new
 svn://192.168.253.182/yidai_co_new
+svn://192.168.253.182/yidai_cc_cunguan
 
 外测 gouling = gouling_branchesER@WQ#$
 svn://125.254.156.42:13389/waice_branches
