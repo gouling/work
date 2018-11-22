@@ -1,0 +1,2 @@
+#!/bin/bash
+/Library/MySQL/bin/mysqladmin -S /tmp/mysql.sock -uroot -proot shutdown >/dev/null 2>&1
