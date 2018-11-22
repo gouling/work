@@ -1,0 +1,3 @@
+qamsgpanel.mxj.mx:32022
+devsaasusersrv.mxj.mx 32022
+qaqywechattokenservice.mxj.mx:32020
