@@ -1,0 +1,2 @@
+#!/bin/bash
+/Library/Redis/redis-cli shutdown
