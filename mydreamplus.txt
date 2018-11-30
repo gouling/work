@@ -1,10 +1,6 @@
 http://devapollo.mxj.mx:38082/ apollo admin
 http://devmsgpanel.mxj.mx/auth/login admin@mxj.com admin
 
-devmsgpanel.mxj.mx:32022
-devsaasusersrv.mxj.mx:32022
-devqywechattokenservice.mxj.mx:32020
+telnet devsaasusersrv.mxj.mx:32022
+telnet devqywechattokenservice.mxj.mx:32020
 
-qamsgpanel.mxj.mx:32022
-qavsaasusersrv.mxj.mx:32022
-qavqywechattokenservice.mxj.mx:32020
