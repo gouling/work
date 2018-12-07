@@ -4,4 +4,3 @@ http://devjenkins.mxj.mx/job/devsaasusersrv.mxj.mx/ admin admin@mxj.com
 
 telnet devsaasusersrv.mxj.mx:32022
 telnet devqywechattokenservice.mxj.mx:32020
-
