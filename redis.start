@@ -1,2 +1,0 @@
-#!/bin/bash
-/Library/Redis/redis-server /Library/Redis/redis.conf

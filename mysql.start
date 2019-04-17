@@ -1,2 +1,0 @@
-#!/bin/bash
-/Library/MySQL/bin/mysqld --defaults-file=/Library/MySQL/default.cnf --user=gouling >/dev/null 2>&1 &
