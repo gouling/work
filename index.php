@@ -1,4 +1,4 @@
-#!/usr/bin/env /usr/share/php-5.3.29/bin/php
+#!/usr/bin/env php
 <?php
     /**
      * 创建可排序永不重复包含字母数字每6位以短横线分隔的25位类式订单号的编码 5b9a0b-756bcb-127764-7879
