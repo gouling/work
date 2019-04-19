@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rdesktop -u root -p root -g 90% -a 16 192.168.1.3
