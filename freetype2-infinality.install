@@ -1,0 +1,6 @@
+#!/bin/bash
+git clone https://aur.archlinux.org/freetype2-infinality.git
+cd freetype2-infinality
+gpg --recv-keys 5CC908FDB71E12C2
+makepkg -si
+
